@@ -1,12 +1,14 @@
 import os
 import json
+from audioop import reverse
 
 from django.conf import settings
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.urls import reverse_lazy
 from rest_framework.decorators import api_view
 import requests
-
+from allauth.socialaccount.providers.oauth2.views import OAuth2Adapter, OAuth2LoginView
 
 __version__ = "0.5.0"
 
@@ -40,4 +42,25 @@ def microsoft_id_api(request):
         ]
     }
     return JsonResponse(data)
+
+class MsOauth2Adapter(OAuth2Adapter):
+    """
+    Microsoft OAuth2.0 adapter
+    """
+    provider_id = 'microsoft'
+    access_token_url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
+    authorize_url = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
+    profile_url = 'https://graph.microsoft.com/v1.0/me'
+
+    def complete_login(self, request, app, token, **kwargs):
+        resp = requests.get(self.profile_url, headers={
+            'Authorization': 'Bearer ' + token.token
+        })
+        resp.raise_for_status()
+        extra_data = resp.json()
+        return self.get_provider().sociallogin_from_response(request, extra_data)
+
+class MsOauth2LoginView(OAuth2LoginView):
+    adapter_class = MsOauth2Adapter
+    callback_url = reverse_lazy('socialaccount_callback')
 

@@ -177,7 +177,7 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': 'm1r8Q~T.2zVWczKLaxbuj__wXmgoWV4fLwfGGcKE', # Azure客户端密码
             'key': '',
             'tenant': '73f5b0c0-fa9e-4104-bbbb-339533cf9876',  # 多租户模式用'common'，单租户用租户ID,
-            'callback_url': 'https://mjio.cn/call_api'
+            'callback_url': 'https://mjio.cn/accounts/microsoft/login/callback/'
 
         },
         'SCOPE': ['User.Read', 'openid', 'profile', 'email'],

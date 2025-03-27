@@ -61,6 +61,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # 添加这一行
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.microsoft',  # 添加这一行以支持 Microsoft SSO
     "identity",  # To utilize the default templates came with the identity package
 ]
 
@@ -68,10 +73,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -110,10 +116,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'test_project',
-        'USER': 'work',
-        'PASSWORD': '123456',
+        'USER': 'root',
+        'PASSWORD': 'commonsecret',
         'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PORT': '10012'
     }
 
 }
@@ -163,3 +169,19 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'microsoft': {
+        'APP': {
+            'client_id': '8f406c2f-1e7d-453d-ad20-e8eacb5f0abe',  # Azure应用ID
+            'secret': 'm1r8Q~T.2zVWczKLaxbuj__wXmgoWV4fLwfGGcKE', # Azure客户端密码
+            'key': '',
+            'tenant': '73f5b0c0-fa9e-4104-bbbb-339533cf9876',  # 多租户模式用'common'，单租户用租户ID,
+            'callback_url': 'https://mjio.cn/call_api'
+
+        },
+        'SCOPE': ['User.Read', 'openid', 'profile', 'email'],
+        'AUTH_PARAMS': {'prompt': 'select_account'},
+    }
+}
+SITE_ID=1

@@ -15,16 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
+from django.views.generic import TemplateView
 
 from . import views
 
 
 urlpatterns = [
-    settings.AUTH.urlpattern,
-    path('', views.index),
-    path("call_api", views.call_api),
+    #settings.AUTH.urlpattern,
+    #path('', views.index),
+    #path("call_api", views.call_api),
     path(".well-known/microsoft-identity-association.json", views.microsoft_id_api),
     path('admin/', admin.site.urls),
+]
+urlpatterns += [
+    path('accounts/', include('allauth.urls')),
+    path('accounts/social/login/microsoft/', TemplateView.as_view(template_name='socialaccount/snippets/provider_list.html'), name='socialaccount_providers'),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

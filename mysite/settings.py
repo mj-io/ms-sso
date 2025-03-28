@@ -31,6 +31,9 @@ AUTH = Auth(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -121,10 +124,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'test_project',
-        'USER': 'root',
-        'PASSWORD': 'commonsecret',
+        'USER': 'work',
+        'PASSWORD': '123456',
         'HOST': '127.0.0.1',
-        'PORT': '10012'
+        'PORT': '3306'
     }
 
 }

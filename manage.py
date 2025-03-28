@@ -3,7 +3,9 @@
 import os
 import sys
 
+#import pydevd
 
+#pydevd.settrace('127.0.0.1', port=12345, stdoutToServer=True, stderrToServer=True)
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')

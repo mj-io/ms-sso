@@ -68,6 +68,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',  # 添加这一行以支持 Microsoft SSO
     "identity",  # To utilize the default templates came with the identity package
 ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware'
+
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -185,3 +190,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 SITE_ID=1
+SOCIALACCOUNT_ADAPTER = 'mysite.socialaccount_adapters.CustomAdapter'
+

@@ -190,5 +190,5 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 SITE_ID=1
-SOCIALACCOUNT_ADAPTER = 'mysite.socialaccount_adapters.CustomAdapter'
+SOCIALACCOUNT_ADAPTER = 'mysite.socialaccount_adapter.CustomAdapter'
 
